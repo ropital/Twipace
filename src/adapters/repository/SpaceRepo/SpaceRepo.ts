@@ -47,6 +47,11 @@ export class SpaceRepo {
     );
 
     if (!res.data.data) return [];
+    if (res.data.data.length > 100) {
+      const data = res.data.data.slice(0, 100);
+      const spaces = await this.convertMany(data);
+      return spaces ?? [];
+    }
 
     const spaces = await this.convertMany(res.data.data);
     return spaces ?? [];
@@ -58,7 +63,6 @@ export class SpaceRepo {
     if (!data) return undefined;
 
     const creatorIds = data.map((space) => space.creator_id);
-    console.log(creatorIds);
     const creators = await this.usersRepo.getList(creatorIds);
 
     const spaces = data.map((space) => {

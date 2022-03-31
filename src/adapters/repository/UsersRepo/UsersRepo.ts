@@ -29,6 +29,13 @@ export class UsersRepo {
     return users;
   }
 
+  async getByUsername(username: string) {
+    const res = await this.httpClient.get<GetUserReponse>(
+      `/api/users/by/username/${username}`
+    );
+    return this.convert(res.data.data);
+  }
+
   private convert(data: GetUserReponse["data"]): User {
     return new User({
       id: data.id,

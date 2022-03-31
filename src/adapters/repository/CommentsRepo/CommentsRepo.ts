@@ -16,6 +16,7 @@ import { Comment } from "models/Comment";
 type SendComment = {
   text: string;
   creatorId?: string;
+  spaceId: string;
   createdAt: Date;
 };
 
@@ -36,6 +37,7 @@ export class CommentsRepo {
       await addDoc(collection(this.store, "comments"), {
         text: comment.text,
         creatorId: comment.creatorId ?? null,
+        spaceId: comment.spaceId,
         createdAt: Timestamp.fromDate(comment.createdAt),
       });
     } catch (error) {

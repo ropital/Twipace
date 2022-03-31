@@ -1,7 +1,7 @@
 import { useAdapter } from "context/AdapterContext";
 import { Space, SpaceState } from "models/Space";
 import { useRouter } from "next/dist/client/router";
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEventHandler, FormEvent, useEffect, useState } from "react";
 
 export const useSearchSpaces = () => {
   const router = useRouter();
@@ -15,7 +15,8 @@ export const useSearchSpaces = () => {
     setInitialState();
   }, [router.query]);
 
-  const searchSpaces = async () => {
+  const searchSpaces = async (event: FormEvent) => {
+    event.preventDefault();
     setIsLoading(true);
     const keywordsArr = keywords.split(" ");
     const spaces = await spaceRepo.getListByKeywords(keywordsArr, spaceState);

@@ -30,11 +30,13 @@ export default function Home() {
 
       <Header onClickTwitter={auth.signInWithTwitter} />
       <div className="mt-10">
-        <SearchInput
-          onClick={searchSpaces}
-          value={keywords}
-          onChange={onChangeKeywords}
-        />
+        <form onSubmit={searchSpaces}>
+          <SearchInput
+            onClick={searchSpaces}
+            value={keywords}
+            onChange={onChangeKeywords}
+          />
+        </form>
       </div>
 
       <SpaceStateRadio value={spaceState} onChange={onChangeState} />

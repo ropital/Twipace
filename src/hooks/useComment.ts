@@ -21,11 +21,12 @@ export const useComment = (spaceId?: string) => {
   };
 
   const sendComment = async () => {
-    if (!text) return;
+    if (!text || !spaceId) return;
 
     setText("");
     await commentsRepo.sendComment({
       text,
+      spaceId,
       createdAt: new Date(),
     });
   };
