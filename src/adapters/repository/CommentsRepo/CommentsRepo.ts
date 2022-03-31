@@ -3,13 +3,13 @@ import {
   addDoc,
   collection,
   Firestore,
-  getDocs,
   getFirestore,
   limit,
   onSnapshot,
   orderBy,
   query,
   Timestamp,
+  where,
 } from "firebase/firestore";
 import { Comment } from "models/Comment";
 
@@ -20,6 +20,7 @@ type SendComment = {
 };
 
 type LoadComments = {
+  spaceId: string;
   displayComments: (comment: Comment) => void;
 };
 
@@ -46,6 +47,7 @@ export class CommentsRepo {
     const recentMessagesQuery = query(
       collection(this.store, "comments"),
       orderBy("createdAt", "asc"),
+      where("spaceId", "==", props.spaceId),
       limit(12)
     );
 

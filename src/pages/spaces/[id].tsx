@@ -10,10 +10,10 @@ import { useEffect, useState } from "react";
 export default function SpacePage() {
   const { spaceRepo } = useAdapter();
   const router = useRouter();
-  const { sendComment, onChangeText, text, comments } = useComment();
   const [space, setSpace] = useState<Space>();
   const spaceId =
     typeof router.query.id === "string" ? router.query.id : undefined;
+  const { sendComment, onChangeText, text, comments } = useComment(spaceId);
 
   useEffect(() => {
     fetch();
