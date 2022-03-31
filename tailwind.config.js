@@ -4,7 +4,14 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        twitter: {
+          normal: "#1DA1F2",
+          dark: "#1d83c2",
+        },
+      },
+    },
   },
   plugins: [require("daisyui")],
 };
