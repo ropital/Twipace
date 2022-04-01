@@ -28,9 +28,9 @@ export default function SpacePage() {
   return (
     <div>
       {space && <SpaceListItem {...space} />}
-      <div>
-        <h2>コメント</h2>
-        <div className="px-4 mt-4">
+      <div className="px-4 mt-4">
+        <h2 className="mb-3">コメント</h2>
+        <div>
           <CommentList comments={comments} />
 
           <form className="mt-4" onSubmit={sendComment}>
