@@ -49,8 +49,7 @@ export class CommentsRepo {
     const recentMessagesQuery = query(
       collection(this.store, "comments"),
       orderBy("createdAt", "asc"),
-      where("spaceId", "==", props.spaceId),
-      limit(12)
+      where("spaceId", "==", props.spaceId)
     );
 
     onSnapshot(recentMessagesQuery, function (snapshot) {
