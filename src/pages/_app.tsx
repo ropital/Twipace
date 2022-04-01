@@ -1,12 +1,12 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { ChakraProvider } from "@chakra-ui/react";
+import { AdapterContextProvider } from "../context/AdapterContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider>
+    <AdapterContextProvider>
       <Component {...pageProps} />
-    </ChakraProvider>
+    </AdapterContextProvider>
   );
 }
 export default MyApp;
