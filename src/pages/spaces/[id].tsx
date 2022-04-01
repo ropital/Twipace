@@ -28,20 +28,15 @@ export default function SpacePage() {
   return (
     <div>
       {space && <SpaceListItem {...space} />}
-      <div className="px-4 mt-4">
+      <div className="px-4 mt-4 pb-20">
         <h2 className="mb-3">コメント</h2>
         <div>
           <CommentList comments={comments} />
-
-          <form className="mt-4" onSubmit={sendComment}>
-            <SendInput
-              onChange={onChangeText}
-              onClick={sendComment}
-              value={text}
-            />
-          </form>
         </div>
       </div>
+      <form className="mt-4 fixed bottom-8 w-full px-4" onSubmit={sendComment}>
+        <SendInput onChange={onChangeText} onClick={sendComment} value={text} />
+      </form>
     </div>
   );
 }
