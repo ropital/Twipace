@@ -11,7 +11,7 @@ export const SendInput: VFC<Props> = ({ onClick, ...props }: Props) => {
       <input
         type="text"
         placeholder="Type here"
-        className="input input-bordered w-full"
+        className="input input-bordered w-full text-lg"
         {...props}
       />
       <button
