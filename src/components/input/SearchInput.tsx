@@ -25,6 +25,7 @@ export const SearchInput: VFC<Props> = ({
             placeholder="Search"
             aria-label="Search"
             aria-describedby="button-addon3"
+            required
             {...props}
             onChange={onChange}
           />

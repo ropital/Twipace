@@ -40,8 +40,19 @@ export default function Home() {
       </div>
 
       <SpaceStateRadio value={spaceState} onChange={onChangeState} />
+      {!keywords && !spaces && (
+        <div className="flex justify-center mt-10">
+          <p className="text-lg">キーワードを入力してください</p>
+        </div>
+      )}
       <div className="flex justify-center mt-10">
-        {isLoading ? <Spinner /> : <SpaceList spaces={spaces} />}
+        {isLoading && <Spinner />}
+        {!isLoading && spaces && spaces.length !== 0 && (
+          <SpaceList spaces={spaces} />
+        )}
+        {!isLoading && spaces && spaces.length === 0 && (
+          <p className="text-lg">該当するスペースが見つかりませんでした</p>
+        )}
       </div>
     </div>
   );

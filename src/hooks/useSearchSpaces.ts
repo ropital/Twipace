@@ -7,16 +7,27 @@ export const useSearchSpaces = () => {
   const router = useRouter();
   const { spaceRepo } = useAdapter();
   const [keywords, setKeywords] = useState("");
-  const [spaces, setSpaces] = useState<Space[]>([]);
+  const [spaces, setSpaces] = useState<Space[]>();
   const [spaceState, setSpaceState] = useState<SpaceState>();
   const [isLoading, setIsLoading] = useState(false);
+  const _keywords =
+    typeof router.query.keywords === "string"
+      ? router.query.keywords
+      : undefined;
+  const _spaceState =
+    typeof router.query.state === "string" ? router.query.state : undefined;
 
   useEffect(() => {
     setInitialState();
-  }, [router.query]);
+  }, [_keywords, _spaceState]);
 
-  const searchSpaces = async (event: FormEvent) => {
-    event.preventDefault();
+  useEffect(() => {
+    searchSpaces();
+  }, [spaceState]);
+
+  const searchSpaces = async (event?: FormEvent) => {
+    if (!keywords) return;
+    event?.preventDefault();
     setIsLoading(true);
     const keywordsArr = keywords.split(" ");
     const spaces = await spaceRepo.getListByKeywords(keywordsArr, spaceState);
@@ -30,6 +41,7 @@ export const useSearchSpaces = () => {
     keywords: string,
     spaceState: SpaceState | undefined
   ) => {
+    if (!keywords) return;
     setIsLoading(true);
     const keywordsArr = keywords.split(" ");
     const spaces = await spaceRepo.getListByKeywords(keywordsArr, spaceState);
@@ -49,15 +61,9 @@ export const useSearchSpaces = () => {
   };
 
   const setInitialState = () => {
-    const _keywords =
-      typeof router.query.keywords === "string"
-        ? router.query.keywords
-        : undefined;
-    const _spaceState =
-      typeof router.query.state === "string" ? router.query.state : undefined;
-
     if (_keywords) {
-      setKeywords(_keywords);
+      const keywordsStr = _keywords.split(",").join(" ");
+      setKeywords(keywordsStr);
     }
 
     if (
