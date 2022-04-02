@@ -2,13 +2,15 @@ import { useAdapter } from "context/AdapterContext";
 import { Space, SpaceState } from "models/Space";
 import { useRouter } from "next/dist/client/router";
 import { ChangeEventHandler, FormEvent, useEffect, useState } from "react";
+import { useAtom } from "jotai";
+import { keywordsAtom, spaceStateAtom } from "store";
 
 export const useSearchSpaces = () => {
   const router = useRouter();
   const { spaceRepo } = useAdapter();
-  const [keywords, setKeywords] = useState("");
+  const [keywords, setKeywords] = useAtom(keywordsAtom);
+  const [spaceState, setSpaceState] = useAtom(spaceStateAtom);
   const [spaces, setSpaces] = useState<Space[]>();
-  const [spaceState, setSpaceState] = useState<SpaceState>();
   const [isLoading, setIsLoading] = useState(false);
   const _keywords =
     typeof router.query.keywords === "string"
@@ -18,6 +20,7 @@ export const useSearchSpaces = () => {
     typeof router.query.state === "string" ? router.query.state : undefined;
 
   useEffect(() => {
+    // if (!router.isReady) return;
     setInitialState();
   }, [_keywords, _spaceState]);
 

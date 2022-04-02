@@ -6,18 +6,24 @@ import { useComment } from "hooks/useComment";
 import { Space } from "models/Space";
 import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
+import { ArrowLeftIcon } from "components/icon/LeftArrowIcon";
+import { useAtom } from "jotai";
+import { keywordsAtom, spaceStateAtom } from "store";
 
 export default function SpacePage() {
   const { spaceRepo } = useAdapter();
   const router = useRouter();
+  const [keywords] = useAtom(keywordsAtom);
+  const [spaceState] = useAtom(spaceStateAtom);
   const [space, setSpace] = useState<Space>();
   const spaceId =
     typeof router.query.id === "string" ? router.query.id : undefined;
   const { sendComment, onChangeText, text, comments } = useComment(spaceId);
 
   useEffect(() => {
+    if (!router.isReady) return;
     fetch();
-  }, [spaceId]);
+  }, [router]);
 
   const fetch = async () => {
     if (!spaceId) return;
@@ -25,11 +31,26 @@ export default function SpacePage() {
     setSpace(space);
   };
 
+  const onClickBack = () => {
+    if (keywords || spaceState) {
+      router.back();
+    } else {
+      router.push("/");
+    }
+  };
+
   return (
     <div>
       {space && <SpaceListItem {...space} />}
       <div className="px-4 mt-4 pb-20">
-        <h2 className="mb-3">コメント</h2>
+        <button
+          onClick={onClickBack}
+          className=" inline-flex items-center text-blue-600 fill-current"
+        >
+          <ArrowLeftIcon />
+          <div>検索画面へ</div>
+        </button>
+        <h2 className="my-3">コメント</h2>
         <div>
           <CommentList comments={comments} />
         </div>
