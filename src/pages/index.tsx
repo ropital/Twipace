@@ -35,6 +35,7 @@ export default function Home() {
             onClick={searchSpaces}
             value={keywords}
             onChange={onChangeKeywords}
+            placeholder="@username or title"
           />
         </form>
       </div>
